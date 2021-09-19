@@ -18,13 +18,14 @@ import {StaticImageService} from '../services';
 
 const getDropdownStyle = y => ({...styles.countryDropdown, top: y + 60});
 
-const RegisterPhoneScreen = () => {
+const RegisterPhoneScreen = ({navigation}) => {
   const [selectedCountry, setSelectedCountry] = useState(
     CountryCode.find(country => country.name === 'India'),
   );
   const [inputsContainerY, setInputsContainerY] = useState(0);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [dropdownLayout, setDropdownLayout] = useState({});
+  const [phoneNumber, setPhoneNumber] = useState('');
 
   const closeDropdown = (pageX, pageY) => {
     if (isDropdownOpen) {
@@ -89,10 +90,16 @@ const RegisterPhoneScreen = () => {
             keyboardType="number-pad"
             onFocus={() => setIsDropdownOpen(false)}
             style={styles.inputText}
+            onChangeText={text =>
+              setPhoneNumber(selectedCountry?.dial_code + text)
+            }
           />
         </View>
       </View>
-      <TouchableOpacity style={styles.signinButton} activeOpacity={0.8}>
+      <TouchableOpacity
+        style={styles.signinButton}
+        activeOpacity={0.8}
+        onPress={() => navigation.navigate('Verification', {phoneNumber})}>
         <Text style={styles.signinButtonText}>Contiue</Text>
       </TouchableOpacity>
       {isDropdownOpen && (
