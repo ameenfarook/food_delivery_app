@@ -20,7 +20,9 @@
     "react-native-gesture-handler": "^1.10.3",
     "react-native-safe-area-context": "^3.3.0",
     "react-native-screens": "^3.6.0",
-    "react-native-vector-icons": "^8.1.0"
+    "react-native-vector-icons": "^8.1.0",
+    "react-redux": "^7.2.5",
+    "redux": "^4.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
@@ -37,6 +39,6 @@
     "preset": "react-native"
   },
   "projectConfig": {
-    "backendApiBaseUrl": "http://192.168.1.10:3000"
+    "backendApiBaseUrl": "<put the backend api base url here>"
   }
 }
