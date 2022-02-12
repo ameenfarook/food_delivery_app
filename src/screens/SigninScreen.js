@@ -13,17 +13,19 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Feather from 'react-native-vector-icons/Feather';
 import {Colors, Fonts, Images} from '../contants';
 import {Display} from '../utils';
-import {AuthenicationService} from '../services';
+import {AuthenicationService, StorageService} from '../services';
 import LottieView from 'lottie-react-native';
-import {connect} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {GeneralAction} from '../actions';
 
-const SigninScreen = ({navigation, setToken}) => {
+const SigninScreen = ({navigation}) => {
   const [isPasswordShow, setIsPasswordShow] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+
+  const dispatch = useDispatch();
 
   const signIn = async () => {
     setIsLoading(true);
@@ -33,8 +35,11 @@ const SigninScreen = ({navigation, setToken}) => {
     };
     AuthenicationService.login(user).then(response => {
       setIsLoading(false);
-      setToken(response?.data);
-      if (!response?.status) {
+      if (response?.status) {
+        StorageService.setToken(response?.data).then(() => {
+          dispatch(GeneralAction.setToken(response?.data));
+        });
+      } else {
         setErrorMessage(response?.message);
       }
     });
@@ -327,10 +332,4 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapDispatchToProps = dispatch => {
-  return {
-    setToken: token => dispatch(GeneralAction.setToken(token)),
-  };
-};
-
-export default connect(null, mapDispatchToProps)(SigninScreen);
+export default SigninScreen;
