@@ -1,9 +1,11 @@
-import {StorageService} from '../services';
+import {AuthenicationService, StorageService} from '../services';
+import UserService from '../services/UserService';
 
 const types = {
   SET_IS_APP_LOADING: 'SET_IS_APP_LOADING',
   SET_TOKEN: 'SET_TOKEN',
   SET_FIRST_TIME_USE: 'SET_FIRST_TIME_USE',
+  SET_USER_DATA: 'SET_USER_DATA',
 };
 
 const setIsAppLoading = isAppLoading => {
@@ -40,6 +42,48 @@ const appStart = () => {
         dispatch({
           type: types.SET_TOKEN,
           payload: token,
+        });
+        UserService.getUserData().then(userResponse => {
+          if (userResponse?.status) {
+            dispatch({
+              type: types.SET_USER_DATA,
+              payload: userResponse?.data,
+            });
+            dispatch({
+              type: types.SET_IS_APP_LOADING,
+              payload: false,
+            });
+          } else if (userResponse?.error?.message === 'TokenExpiredError') {
+            AuthenicationService.refreshToken().then(tokenResponse => {
+              if (tokenResponse?.status) {
+                dispatch({
+                  type: types.SET_TOKEN,
+                  payload: tokenResponse?.data,
+                });
+                UserService.getUserData().then(userResponse => {
+                  if (userResponse?.status) {
+                    dispatch({
+                      type: types.SET_USER_DATA,
+                      payload: userResponse?.data,
+                    });
+                    dispatch({
+                      type: types.SET_IS_APP_LOADING,
+                      payload: false,
+                    });
+                  }
+                });
+              } else {
+                dispatch({
+                  type: types.SET_TOKEN,
+                  payload: '',
+                });
+                dispatch({
+                  type: types.SET_IS_APP_LOADING,
+                  payload: false,
+                });
+              }
+            });
+          }
         });
       }
       dispatch({
