@@ -12,6 +12,7 @@ const getUserData = async () => {
         headers: authHeader(getToken()),
       },
     );
+
     if (userResponse?.status === 200) {
       return {
         status: true,
@@ -27,7 +28,9 @@ const getUserData = async () => {
   } catch (error) {
     return {
       status: false,
-      message: `User data not found`,
+      message: error?.response?.data?.message
+        ? error?.response?.data?.message
+        : `User data not found`,
     };
   }
 };

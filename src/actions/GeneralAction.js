@@ -53,7 +53,7 @@ const appStart = () => {
               type: types.SET_IS_APP_LOADING,
               payload: false,
             });
-          } else if (userResponse?.error?.message === 'TokenExpiredError') {
+          } else if (userResponse?.message === 'TokenExpiredError') {
             AuthenicationService.refreshToken().then(tokenResponse => {
               if (tokenResponse?.status) {
                 dispatch({
