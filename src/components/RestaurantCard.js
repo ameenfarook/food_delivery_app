@@ -5,9 +5,20 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {StaticImageService} from '../services';
 
-const RestaurantCard = ({name, images: {poster}, tags, distance, time}) => {
+const RestaurantCard = ({
+  id,
+  name,
+  images: {poster},
+  tags,
+  distance,
+  time,
+  navigate,
+}) => {
   return (
-    <TouchableOpacity style={styles.container} activeOpacity={0.8}>
+    <TouchableOpacity
+      style={styles.container}
+      activeOpacity={0.8}
+      onPress={() => navigate(id)}>
       <Image
         source={{uri: StaticImageService.getPoster(poster)}}
         style={styles.posterStyle}
