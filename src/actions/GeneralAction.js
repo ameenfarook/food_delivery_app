@@ -1,5 +1,6 @@
 import {AuthenicationService, StorageService} from '../services';
 import UserService from '../services/UserService';
+import BookmarkAction from './BookmarkAction';
 import CartAction from './CartAction';
 
 const types = {
@@ -51,6 +52,7 @@ const appStart = () => {
               payload: userResponse?.data,
             });
             dispatch(CartAction.getCartItems());
+            dispatch(BookmarkAction.getBookmarks());
             dispatch({
               type: types.SET_IS_APP_LOADING,
               payload: false,

@@ -39,7 +39,13 @@ const CartScreen = ({navigation}) => {
           <ScrollView>
             <View style={styles.foodList}>
               {cart?.cartItems?.map(item => (
-                <FoodCard {...item?.food} key={item?.food?.id} />
+                <FoodCard
+                  {...item?.food}
+                  key={item?.food?.id}
+                  navigate={() =>
+                    navigation.navigate('Food', {foodId: item?.id})
+                  }
+                />
               ))}
             </View>
             <View style={styles.promoCodeContainer}>

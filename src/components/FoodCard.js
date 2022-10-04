@@ -8,7 +8,7 @@ import {useDispatch} from 'react-redux';
 import {useSelector} from 'react-redux';
 import {CartAction} from '../actions';
 
-const FoodCard = ({id, name, description, price, image}) => {
+const FoodCard = ({id, name, description, price, image, navigate}) => {
   const dispatch = useDispatch();
   const itemCount = useSelector(
     state =>
@@ -21,7 +21,7 @@ const FoodCard = ({id, name, description, price, image}) => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigate()} activeOpacity={0.8}>
         <Image
           style={styles.image}
           source={{
@@ -33,7 +33,7 @@ const FoodCard = ({id, name, description, price, image}) => {
         />
       </TouchableOpacity>
       <View style={styles.detailsContainer}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigate()} activeOpacity={0.8}>
           <Text numberOfLines={1} style={styles.titleText}>
             {name}
           </Text>
