@@ -64,7 +64,7 @@ const checkUserExist = async (type, value) => {
 
 const refreshToken = async () => {
   try {
-    let tokenResponse = await AuthRequest.get(
+    let tokenResponse = await AuthRequest.post(
       ApiContants.BACKEND_API.REFRESH_TOKEN,
       {headers: authHeader(getToken())},
     );
