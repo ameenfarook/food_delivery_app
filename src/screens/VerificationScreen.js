@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, { useRef, useState } from "react";
 import {
   View,
   Text,
@@ -6,22 +6,26 @@ import {
   StatusBar,
   TextInput,
   TouchableOpacity,
-} from 'react-native';
-import {Separator} from '../components';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import {Colors, Fonts} from '../contants';
-import {Display} from '../utils';
+} from "react-native";
+import { Separator } from "../components";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import { Colors, Fonts } from "../constants";
+import { Display } from "../utils";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const VerificationScreen = ({
+  navigation,
   route: {
-    params: {phoneNumber},
+    params: { phoneNumber },
   },
 }) => {
   const firstInput = useRef();
   const secondInput = useRef();
   const thirdInput = useRef();
   const fourthInput = useRef();
-  const [otp, setOtp] = useState({1: '', 2: '', 3: '', 4: ''});
+  const [otp, setOtp] = useState({ 1: "", 2: "", 3: "", 4: "" });
+
+  const insets = useSafeAreaInsets();
 
   return (
     <View style={styles.container}>
@@ -30,7 +34,7 @@ const VerificationScreen = ({
         backgroundColor={Colors.DEFAULT_WHITE}
         translucent
       />
-      <Separator height={StatusBar.currentHeight} />
+      <Separator height={insets.top} />
       <View style={styles.headerContainer}>
         <Ionicons
           name="chevron-back-outline"
@@ -41,7 +45,7 @@ const VerificationScreen = ({
       </View>
       <Text style={styles.title}>OTP Verification</Text>
       <Text style={styles.content}>
-        Enter the OTP number just sent you at{' '}
+        Enter the OTP number just sent you at{" "}
         <Text style={styles.phoneNumberText}>{phoneNumber}</Text>
       </Text>
       <View style={styles.otpContainer}>
@@ -51,8 +55,8 @@ const VerificationScreen = ({
             keyboardType="number-pad"
             maxLength={1}
             ref={firstInput}
-            onChangeText={text => {
-              setOtp({...otp, 1: text});
+            onChangeText={(text) => {
+              setOtp({ ...otp, 1: text });
               text && secondInput.current.focus();
             }}
           />
@@ -63,8 +67,8 @@ const VerificationScreen = ({
             keyboardType="number-pad"
             maxLength={1}
             ref={secondInput}
-            onChangeText={text => {
-              setOtp({...otp, 2: text});
+            onChangeText={(text) => {
+              setOtp({ ...otp, 2: text });
               text ? thirdInput.current.focus() : firstInput.current.focus();
             }}
           />
@@ -75,8 +79,8 @@ const VerificationScreen = ({
             keyboardType="number-pad"
             maxLength={1}
             ref={thirdInput}
-            onChangeText={text => {
-              setOtp({...otp, 3: text});
+            onChangeText={(text) => {
+              setOtp({ ...otp, 3: text });
               text ? fourthInput.current.focus() : secondInput.current.focus();
             }}
           />
@@ -87,8 +91,8 @@ const VerificationScreen = ({
             keyboardType="number-pad"
             maxLength={1}
             ref={fourthInput}
-            onChangeText={text => {
-              setOtp({...otp, 4: text});
+            onChangeText={(text) => {
+              setOtp({ ...otp, 4: text });
               !text && thirdInput.current.focus();
             }}
           />
@@ -96,7 +100,8 @@ const VerificationScreen = ({
       </View>
       <TouchableOpacity
         style={styles.signinButton}
-        onPress={() => console.log(otp)}>
+        onPress={() => console.log(otp)}
+      >
         <Text style={styles.signinButtonText}>Verify</Text>
       </TouchableOpacity>
     </View>
@@ -109,8 +114,8 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.DEFAULT_WHITE,
   },
   headerContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     paddingVertical: 10,
     paddingHorizontal: 20,
   },
@@ -119,7 +124,7 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.POPPINS_MEDIUM,
     lineHeight: 20 * 1.4,
     width: Display.setWidth(80),
-    textAlign: 'center',
+    textAlign: "center",
   },
   title: {
     fontSize: 20,
@@ -145,9 +150,9 @@ const styles = StyleSheet.create({
   otpContainer: {
     marginHorizontal: 20,
     marginBottom: 20,
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
-    flexDirection: 'row',
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    flexDirection: "row",
   },
   otpBox: {
     borderRadius: 5,
@@ -158,7 +163,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
     color: Colors.DEFAULT_BLACK,
     padding: 0,
-    textAlign: 'center',
+    textAlign: "center",
     paddingHorizontal: 18,
     paddingVertical: 10,
   },
@@ -167,8 +172,8 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginHorizontal: 20,
     height: Display.setHeight(6),
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     marginTop: 20,
   },
   signinButtonText: {

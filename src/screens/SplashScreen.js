@@ -1,7 +1,7 @@
-import React from 'react';
-import {View, Text, StyleSheet, StatusBar, Image} from 'react-native';
-import {Colors, Images, Fonts} from '../contants';
-import {Display} from '../utils';
+import React from "react";
+import { View, Text, StyleSheet, StatusBar, Image } from "react-native";
+import { Colors, Images, Fonts } from "../constants";
+import { Display } from "../utils";
 
 const SplashScreen = () => {
   return (
@@ -20,8 +20,8 @@ const SplashScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     backgroundColor: Colors.DEFAULT_GREEN,
   },
   image: {

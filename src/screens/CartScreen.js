@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   View,
   Text,
@@ -7,17 +7,19 @@ import {
   ScrollView,
   TouchableOpacity,
   Image,
-} from 'react-native';
-import {Colors, Fonts, Images} from '../contants';
-import {FoodCard, Separator} from '../components';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import Entypo from 'react-native-vector-icons/Entypo';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import {Display} from '../utils';
-import {useSelector} from 'react-redux';
+} from "react-native";
+import { Colors, Fonts, Images } from "../constants";
+import { FoodCard, Separator } from "../components";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import Entypo from "react-native-vector-icons/Entypo";
+import AntDesign from "react-native-vector-icons/AntDesign";
+import { Display } from "../utils";
+import { useSelector } from "react-redux";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-const CartScreen = ({navigation}) => {
-  const cart = useSelector(state => state?.cartState?.cart);
+const CartScreen = ({ navigation }) => {
+  const cart = useSelector((state) => state?.cartState?.cart);
+  const insets = useSafeAreaInsets();
   return (
     <View style={styles.container}>
       <StatusBar
@@ -25,7 +27,7 @@ const CartScreen = ({navigation}) => {
         backgroundColor={Colors.DEFAULT_WHITE}
         translucent
       />
-      <Separator height={StatusBar.currentHeight} />
+      <Separator height={insets.top} />
       <View style={styles.headerContainer}>
         <Ionicons
           name="chevron-back-outline"
@@ -38,12 +40,12 @@ const CartScreen = ({navigation}) => {
         <>
           <ScrollView>
             <View style={styles.foodList}>
-              {cart?.cartItems?.map(item => (
+              {cart?.cartItems?.map((item) => (
                 <FoodCard
                   {...item?.food}
                   key={item?.food?.id}
                   navigate={() =>
-                    navigation.navigate('Food', {foodId: item?.id})
+                    navigation.navigate("Food", { foodId: item?.id })
                   }
                 />
               ))}
@@ -75,7 +77,8 @@ const CartScreen = ({navigation}) => {
               <View style={styles.amountSubContainer}>
                 <Text style={styles.amountLabelText}>Delivery Fee</Text>
                 <Text
-                  style={{...styles.amountText, color: Colors.DEFAULT_GREEN}}>
+                  style={{ ...styles.amountText, color: Colors.DEFAULT_GREEN }}
+                >
                   Free
                 </Text>
               </View>
@@ -130,8 +133,8 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.DEFAULT_WHITE,
   },
   headerContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     paddingVertical: 10,
     paddingHorizontal: 20,
   },
@@ -140,20 +143,20 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.POPPINS_MEDIUM,
     lineHeight: 20 * 1.4,
     width: Display.setWidth(80),
-    textAlign: 'center',
+    textAlign: "center",
   },
   foodList: {
     marginHorizontal: Display.setWidth(4),
   },
   promoCodeContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginHorizontal: Display.setWidth(4),
     paddingVertical: 15,
     marginTop: 10,
     borderTopWidth: 0.5,
     borderBottomWidth: 0.5,
-    justifyContent: 'space-between',
+    justifyContent: "space-between",
   },
   promoCodeText: {
     fontSize: 15,
@@ -163,8 +166,8 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   rowAndCenter: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
   amountContainer: {
     marginHorizontal: Display.setWidth(4),
@@ -172,9 +175,9 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0.5,
   },
   amountSubContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     marginVertical: 3,
   },
   amountLabelText: {
@@ -193,8 +196,8 @@ const styles = StyleSheet.create({
     marginHorizontal: Display.setWidth(4),
     paddingVertical: 15,
     borderBottomWidth: 0.5,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   totalText: {
     fontSize: 20,
@@ -203,13 +206,13 @@ const styles = StyleSheet.create({
     color: Colors.DEFAULT_BLACK,
   },
   checkoutButton: {
-    flexDirection: 'row',
+    flexDirection: "row",
     width: Display.setWidth(80),
     backgroundColor: Colors.DEFAULT_GREEN,
-    alignSelf: 'center',
+    alignSelf: "center",
     paddingHorizontal: 20,
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    justifyContent: "space-between",
+    alignItems: "center",
     borderRadius: 10,
     height: Display.setHeight(7),
     marginTop: 10,
@@ -223,8 +226,8 @@ const styles = StyleSheet.create({
   },
   emptyCartContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   emptyCartText: {
     fontSize: 30,
@@ -239,15 +242,15 @@ const styles = StyleSheet.create({
     color: Colors.INACTIVE_GREY,
   },
   addButtonEmpty: {
-    flexDirection: 'row',
+    flexDirection: "row",
     backgroundColor: Colors.DEFAULT_YELLOW,
     borderRadius: 8,
     paddingHorizontal: Display.setWidth(4),
     paddingVertical: 5,
     marginTop: 10,
-    justifyContent: 'space-evenly',
+    justifyContent: "space-evenly",
     elevation: 3,
-    alignItems: 'center',
+    alignItems: "center",
   },
   addButtonEmptyText: {
     fontSize: 12,

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   View,
   Text,
@@ -6,23 +6,26 @@ import {
   StatusBar,
   Image,
   TouchableOpacity,
-} from 'react-native';
-import {Separator, ToggleButton} from '../components';
-import {Colors, Fonts, Images} from '../contants';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import Feather from 'react-native-vector-icons/Feather';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {Display} from '../utils';
-import {useDispatch} from 'react-redux';
-import {StorageService} from '../services';
-import {GeneralAction} from '../actions';
+} from "react-native";
+import { Separator, ToggleButton } from "../components";
+import { Colors, Fonts, Images } from "../constants";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import Feather from "react-native-vector-icons/Feather";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { Display } from "../utils";
+import { useDispatch } from "react-redux";
+import { StorageService } from "../services";
+import { GeneralAction } from "../actions";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-const AccountScreen = ({navigation}) => {
+const AccountScreen = ({ navigation }) => {
   const dispatch = useDispatch();
 
+  const insets = useSafeAreaInsets();
+
   const logout = () => {
-    StorageService.setToken('').then(() => {
-      dispatch(GeneralAction.setToken(''));
+    StorageService.setToken("").then(() => {
+      dispatch(GeneralAction.setToken(""));
       dispatch(GeneralAction.setUserData(null));
     });
   };
@@ -34,7 +37,7 @@ const AccountScreen = ({navigation}) => {
         backgroundColor={Colors.DEFAULT_GREEN}
         translucent
       />
-      <Separator height={StatusBar.currentHeight} />
+      <Separator height={insets.top} />
       <View style={styles.backgroundCurvedContainer} />
       <View style={styles.headerContainer}>
         <Ionicons
@@ -69,21 +72,24 @@ const AccountScreen = ({navigation}) => {
               color={Colors.DEFAULT_GREEN}
             />
           </View>
-          <Text style={styles.menuText}>My All {'\n'}Orders</Text>
+          <Text style={styles.menuText}>My All {"\n"}Orders</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.menuItem} activeOpacity={0.8}>
-          <View style={{...styles.menuIcon, backgroundColor: Colors.LIGHT_RED}}>
+          <View
+            style={{ ...styles.menuIcon, backgroundColor: Colors.LIGHT_RED }}
+          >
             <MaterialCommunityIcons
               name="gift-outline"
               size={18}
               color={Colors.SECONDARY_RED}
             />
           </View>
-          <Text style={styles.menuText}>Offers {'&\n'} Promos</Text>
+          <Text style={styles.menuText}>Offers {"&\n"} Promos</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.menuItem} activeOpacity={0.8}>
           <View
-            style={{...styles.menuIcon, backgroundColor: Colors.LIGHT_YELLOW}}>
+            style={{ ...styles.menuIcon, backgroundColor: Colors.LIGHT_YELLOW }}
+          >
             <Ionicons
               name="location-outline"
               size={18}
@@ -158,7 +164,8 @@ const AccountScreen = ({navigation}) => {
           <TouchableOpacity
             style={styles.sectionTextContainer}
             activeOpacity={0.8}
-            onPress={() => logout()}>
+            onPress={() => logout()}
+          >
             <MaterialCommunityIcons
               name="logout"
               size={18}
@@ -180,17 +187,17 @@ const styles = StyleSheet.create({
   backgroundCurvedContainer: {
     backgroundColor: Colors.DEFAULT_GREEN,
     height: 2000,
-    position: 'absolute',
+    position: "absolute",
     top: -1 * (2000 - 230),
     width: 2000,
     borderRadius: 2000,
-    alignSelf: 'center',
+    alignSelf: "center",
     zIndex: -1,
   },
   headerContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     paddingVertical: 10,
     paddingHorizontal: 20,
   },
@@ -202,12 +209,12 @@ const styles = StyleSheet.create({
   },
   alertBadge: {
     backgroundColor: Colors.DEFAULT_YELLOW,
-    position: 'absolute',
+    position: "absolute",
     height: 16,
     width: 16,
     borderRadius: 32,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     right: -2,
     top: -10,
   },
@@ -219,15 +226,15 @@ const styles = StyleSheet.create({
   },
   profileHeaderContainer: {
     marginHorizontal: 20,
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginTop: 10,
   },
   profileImageContainer: {
     backgroundColor: Colors.DEFAULT_WHITE,
     borderRadius: 32,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     padding: 1,
     elevation: 3,
   },
@@ -257,20 +264,20 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     marginTop: 20,
     elevation: 3,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     paddingVertical: 20,
   },
   menuItem: {
     flex: 1,
-    alignItems: 'center',
+    alignItems: "center",
   },
   menuIcon: {
     backgroundColor: Colors.LIGHT_GREEN,
     height: Display.setWidth(8),
     width: Display.setWidth(8),
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     borderRadius: 32,
   },
   menuText: {
@@ -278,7 +285,7 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.POPPINS_SEMI_BOLD,
     lineHeight: 12 * 1.4,
     color: Colors.DEFAULT_BLACK,
-    textAlign: 'center',
+    textAlign: "center",
     marginTop: 5,
   },
   mainContainer: {
@@ -298,14 +305,14 @@ const styles = StyleSheet.create({
     marginTop: 25,
   },
   sectionContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     marginTop: 15,
   },
   sectionTextContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
   sectionText: {
     fontSize: 13,

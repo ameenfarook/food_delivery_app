@@ -1,23 +1,23 @@
-import React, {useState} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import {ApiContants, Colors, Fonts} from '../contants';
-import {StaticImageService} from '../services';
-import {Display} from '../utils';
-import {useDispatch} from 'react-redux';
-import {useSelector} from 'react-redux';
-import {CartAction} from '../actions';
+import React, { useState } from "react";
+import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
+import AntDesign from "react-native-vector-icons/AntDesign";
+import { ApiContants, Colors, Fonts } from "../constants";
+import { StaticImageService } from "../services";
+import { Display } from "../utils";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { CartAction } from "../actions";
 
-const FoodCard = ({id, name, description, price, image, navigate}) => {
+const FoodCard = ({ id, name, description, price, image, navigate }) => {
   const dispatch = useDispatch();
   const itemCount = useSelector(
-    state =>
-      state?.cartState?.cart?.cartItems?.find(item => item?.foodId === id)
-        ?.count,
+    (state) =>
+      state?.cartState?.cart?.cartItems?.find((item) => item?.foodId === id)
+        ?.count
   );
-  const addToCart = foodId => dispatch(CartAction.addToCart({foodId}));
-  const removeFromCart = foodId =>
-    dispatch(CartAction.removeFromCart({foodId}));
+  const addToCart = (foodId) => dispatch(CartAction.addToCart({ foodId }));
+  const removeFromCart = (foodId) =>
+    dispatch(CartAction.removeFromCart({ foodId }));
 
   return (
     <View style={styles.container}>
@@ -27,7 +27,7 @@ const FoodCard = ({id, name, description, price, image, navigate}) => {
           source={{
             uri: StaticImageService.getGalleryImage(
               image,
-              ApiContants.STATIC_IMAGE.SIZE.SQUARE,
+              ApiContants.STATIC_IMAGE.SIZE.SQUARE
             ),
           }}
         />
@@ -72,9 +72,9 @@ const FoodCard = ({id, name, description, price, image, navigate}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'row',
+    flexDirection: "row",
     marginVertical: 5,
-    alignItems: 'center',
+    alignItems: "center",
     borderRadius: 10,
     elevation: 2,
     backgroundColor: Colors.LIGHT_GREY,
@@ -111,14 +111,14 @@ const styles = StyleSheet.create({
     lineHeight: 14 * 1.4,
   },
   footerContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     marginHorizontal: 5,
   },
   itemAddContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     backgroundColor: Colors.LIGHT_GREY2,
     paddingVertical: 5,
     paddingHorizontal: 10,

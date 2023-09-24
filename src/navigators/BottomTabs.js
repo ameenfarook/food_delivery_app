@@ -1,14 +1,14 @@
-import React from 'react';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import React from "react";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
   AccountScreen,
   BookmarkScreen,
   CartScreen,
   HomeScreen,
-} from '../screens';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import {Display} from '../utils';
-import {Colors} from '../contants';
+} from "../screens";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import { Display } from "../utils";
+import { Colors } from "../constants";
 
 const BottomTabs = createBottomTabNavigator();
 
@@ -17,7 +17,7 @@ export default () => (
     screenOptions={{
       headerShown: false,
       tabBarStyle: {
-        position: 'absolute',
+        position: "absolute",
         borderTopLeftRadius: 25,
         borderTopRightRadius: 25,
         height: Display.setHeight(8),
@@ -28,12 +28,13 @@ export default () => (
       tabBarActiveTintColor: Colors.DEFAULT_GREEN,
       tabBarInactiveTintColor: Colors.INACTIVE_GREY,
     }}
-    op>
+    op
+  >
     <BottomTabs.Screen
       name="Home"
       component={HomeScreen}
       options={{
-        tabBarIcon: ({color}) => (
+        tabBarIcon: ({ color }) => (
           <Ionicons name="home-outline" size={23} color={color} />
         ),
       }}
@@ -42,7 +43,7 @@ export default () => (
       name="Bookmark"
       component={BookmarkScreen}
       options={{
-        tabBarIcon: ({color}) => (
+        tabBarIcon: ({ color }) => (
           <Ionicons name="bookmark-outline" size={23} color={color} />
         ),
       }}
@@ -51,7 +52,7 @@ export default () => (
       name="Cart"
       component={CartScreen}
       options={{
-        tabBarIcon: ({color}) => (
+        tabBarIcon: ({ color }) => (
           <Ionicons name="cart-outline" size={23} color={color} />
         ),
       }}
@@ -60,7 +61,7 @@ export default () => (
       name="Account"
       component={AccountScreen}
       options={{
-        tabBarIcon: ({color}) => (
+        tabBarIcon: ({ color }) => (
           <Ionicons name="person-outline" size={23} color={color} />
         ),
       }}

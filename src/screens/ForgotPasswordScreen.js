@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   View,
   Text,
@@ -6,14 +6,16 @@ import {
   StatusBar,
   TextInput,
   TouchableOpacity,
-} from 'react-native';
-import {Separator} from '../components';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import Feather from 'react-native-vector-icons/Feather';
-import {Colors, Fonts} from '../contants';
-import {Display} from '../utils';
+} from "react-native";
+import { Separator } from "../components";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import Feather from "react-native-vector-icons/Feather";
+import { Colors, Fonts } from "../constants";
+import { Display } from "../utils";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const ForgotPasswordScreen = () => {
+  const insets = useSafeAreaInsets();
   return (
     <View style={styles.container}>
       <StatusBar
@@ -21,7 +23,7 @@ const ForgotPasswordScreen = () => {
         backgroundColor={Colors.DEFAULT_WHITE}
         translucent
       />
-      <Separator height={StatusBar.currentHeight} />
+      <Separator height={insets.top} />
       <View style={styles.headerContainer}>
         <Ionicons
           name="chevron-back-outline"
@@ -40,7 +42,7 @@ const ForgotPasswordScreen = () => {
             name="mail"
             size={22}
             color={Colors.DEFAULT_GREY}
-            style={{marginRight: 10}}
+            style={{ marginRight: 10 }}
           />
           <TextInput
             placeholder="Email"
@@ -63,8 +65,8 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.DEFAULT_WHITE,
   },
   headerContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     paddingVertical: 10,
     paddingHorizontal: 20,
   },
@@ -73,7 +75,7 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.POPPINS_MEDIUM,
     lineHeight: 20 * 1.4,
     width: Display.setWidth(80),
-    textAlign: 'center',
+    textAlign: "center",
   },
   title: {
     fontSize: 20,
@@ -97,15 +99,15 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderWidth: 0.5,
     borderColor: Colors.LIGHT_GREY2,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   inputSubContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
   inputText: {
     fontSize: 18,
-    textAlignVertical: 'center',
+    textAlignVertical: "center",
     padding: 0,
     height: Display.setHeight(6),
     color: Colors.DEFAULT_BLACK,
@@ -116,8 +118,8 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginHorizontal: 20,
     height: Display.setHeight(6),
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     marginTop: 20,
   },
   signinButtonText: {

@@ -1,16 +1,16 @@
-import {ApiContants} from '../contants';
-import axios from 'axios';
-import {authHeader} from '../utils/Generator';
-import {getToken} from '../Store';
+import { ApiContants } from "../constants";
+import axios from "axios";
+import { authHeader } from "../utils/Generator";
+import { getToken } from "../Store";
 
-const getOneFoodById = async foodId => {
+const getOneFoodById = async (foodId) => {
   console.log(`FoodService | getOneFoodById`);
   try {
     let foodResponse = await axios.get(
       `${ApiContants.BACKEND_API.BASE_API_URL}${ApiContants.BACKEND_API.FOOD}/${foodId}`,
       {
         headers: authHeader(getToken()),
-      },
+      }
     );
     if (foodResponse?.status === 200) {
       return {
@@ -32,4 +32,4 @@ const getOneFoodById = async foodId => {
   }
 };
 
-export default {getOneFoodById};
+export default { getOneFoodById };

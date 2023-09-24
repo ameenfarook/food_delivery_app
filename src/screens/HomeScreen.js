@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -7,33 +7,36 @@ import {
   ScrollView,
   FlatList,
   TouchableOpacity,
-} from 'react-native';
+} from "react-native";
 import {
   CategoryMenuItem,
   RestaurantCard,
   RestaurantMediumCard,
   Separator,
-} from '../components';
-import {Colors, Fonts, Mock} from '../contants';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import Feather from 'react-native-vector-icons/Feather';
-import {RestaurantService} from '../services';
-import {Display} from '../utils';
+} from "../components";
+import { Colors, Fonts, Mock } from "../constants";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import Feather from "react-native-vector-icons/Feather";
+import { RestaurantService } from "../services";
+import { Display } from "../utils";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-const sortStyle = isActive =>
+const sortStyle = (isActive) =>
   isActive
     ? styles.sortListItem
-    : {...styles.sortListItem, borderBottomColor: Colors.DEFAULT_WHITE};
+    : { ...styles.sortListItem, borderBottomColor: Colors.DEFAULT_WHITE };
 
-const HomeScreen = ({navigation}) => {
+const HomeScreen = ({ navigation }) => {
   const [activeCategory, setActiveCategory] = useState();
   const [restaurants, setRestaurants] = useState(null);
-  const [activeSortItem, setActiveSortItem] = useState('recent');
+  const [activeSortItem, setActiveSortItem] = useState("recent");
+
+  const insets = useSafeAreaInsets();
 
   useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      RestaurantService.getRestaurants().then(response => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      RestaurantService.getRestaurants().then((response) => {
         if (response?.status) {
           setRestaurants(response?.data);
         }
@@ -49,7 +52,7 @@ const HomeScreen = ({navigation}) => {
         backgroundColor={Colors.DEFAULT_GREEN}
         translucent
       />
-      <Separator height={StatusBar.currentHeight} />
+      <Separator height={insets.top} />
       <View style={styles.backgroundCurvedContainer} />
       <View style={styles.headerContainer}>
         <View style={styles.locationContainer}>
@@ -69,7 +72,7 @@ const HomeScreen = ({navigation}) => {
             name="bell"
             size={24}
             color={Colors.DEFAULT_WHITE}
-            style={{position: 'absolute', right: 0}}
+            style={{ position: "absolute", right: 0 }}
           />
           <View style={styles.alertBadge}>
             <Text style={styles.alertBadgeText}>12</Text>
@@ -88,11 +91,11 @@ const HomeScreen = ({navigation}) => {
             name="sliders"
             size={20}
             color={Colors.DEFAULT_YELLOW}
-            style={{marginRight: 10}}
+            style={{ marginRight: 10 }}
           />
         </View>
         <View style={styles.categoriesContainer}>
-          {Mock.CATEGORIES.map(({name, logo}) => (
+          {Mock.CATEGORIES.map(({ name, logo }) => (
             <CategoryMenuItem
               key={name}
               name={name}
@@ -111,16 +114,16 @@ const HomeScreen = ({navigation}) => {
           </View>
           <FlatList
             data={restaurants}
-            keyExtractor={item => item?.id}
+            keyExtractor={(item) => item?.id}
             horizontal
             ListHeaderComponent={() => <Separator width={20} />}
             ListFooterComponent={() => <Separator width={20} />}
             ItemSeparatorComponent={() => <Separator width={10} />}
-            renderItem={({item}) => (
+            renderItem={({ item }) => (
               <RestaurantCard
                 {...item}
-                navigate={restaurantId =>
-                  navigation.navigate('Restaurant', {restaurantId})
+                navigate={(restaurantId) =>
+                  navigation.navigate("Restaurant", { restaurantId })
                 }
               />
             )}
@@ -128,40 +131,45 @@ const HomeScreen = ({navigation}) => {
         </View>
         <View style={styles.sortListContainer}>
           <TouchableOpacity
-            style={sortStyle(activeSortItem === 'recent')}
+            style={sortStyle(activeSortItem === "recent")}
             activeOpacity={0.8}
-            onPress={() => setActiveSortItem('recent')}>
+            onPress={() => setActiveSortItem("recent")}
+          >
             <Text style={styles.sortListItemText}>Recent</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={sortStyle(activeSortItem === 'favorite')}
+            style={sortStyle(activeSortItem === "favorite")}
             activeOpacity={0.8}
-            onPress={() => setActiveSortItem('favorite')}>
+            onPress={() => setActiveSortItem("favorite")}
+          >
             <Text style={styles.sortListItemText}>Favorite</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={sortStyle(activeSortItem === 'rating')}
+            style={sortStyle(activeSortItem === "rating")}
             activeOpacity={0.8}
-            onPress={() => setActiveSortItem('rating')}>
+            onPress={() => setActiveSortItem("rating")}
+          >
             <Text style={styles.sortListItemText}>Rating</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={sortStyle(activeSortItem === 'popular')}
+            style={sortStyle(activeSortItem === "popular")}
             activeOpacity={0.8}
-            onPress={() => setActiveSortItem('popular')}>
+            onPress={() => setActiveSortItem("popular")}
+          >
             <Text style={styles.sortListItemText}>Popular</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={sortStyle(activeSortItem === 'trending')}
+            style={sortStyle(activeSortItem === "trending")}
             activeOpacity={0.8}
-            onPress={() => setActiveSortItem('trending')}>
+            onPress={() => setActiveSortItem("trending")}
+          >
             <Text style={styles.sortListItemText}>Trending</Text>
           </TouchableOpacity>
         </View>
-        {restaurants?.map(item => (
+        {restaurants?.map((item) => (
           <RestaurantMediumCard {...item} key={item?.id} />
         ))}
-        <Separator height={Display.setHeight(5)} />
+        <Separator height={Display.setHeight(10)} />
       </ScrollView>
     </View>
   );
@@ -175,19 +183,19 @@ const styles = StyleSheet.create({
   backgroundCurvedContainer: {
     backgroundColor: Colors.DEFAULT_GREEN,
     height: 2000,
-    position: 'absolute',
+    position: "absolute",
     top: -1 * (2000 - 230),
     width: 2000,
     borderRadius: 2000,
-    alignSelf: 'center',
+    alignSelf: "center",
     zIndex: -1,
   },
   headerContainer: {
-    justifyContent: 'space-evenly',
+    justifyContent: "space-evenly",
   },
   locationContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginTop: 10,
     marginHorizontal: 20,
   },
@@ -208,11 +216,11 @@ const styles = StyleSheet.create({
   alertBadge: {
     borderRadius: 32,
     backgroundColor: Colors.DEFAULT_YELLOW,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     height: 16,
     width: 16,
-    position: 'absolute',
+    position: "absolute",
     right: -2,
     top: -10,
   },
@@ -228,13 +236,13 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginHorizontal: 20,
     marginTop: 20,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   searchSection: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginLeft: 10,
   },
   searchText: {
@@ -245,8 +253,8 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   categoriesContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
+    flexDirection: "row",
+    justifyContent: "space-evenly",
     marginTop: 20,
   },
   listContainer: {
@@ -257,9 +265,9 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   listHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     marginHorizontal: 20,
     marginBottom: 5,
   },
@@ -276,17 +284,17 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.POPPINS_MEDIUM,
   },
   sortListContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    alignItems: "center",
     backgroundColor: Colors.DEFAULT_WHITE,
     marginTop: 8,
     elevation: 1,
   },
   sortListItem: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     borderBottomWidth: 1,
     borderBottomColor: Colors.DEFAULT_YELLOW,
     height: 40,

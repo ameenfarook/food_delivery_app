@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -7,25 +7,25 @@ import {
   Image,
   ScrollView,
   FlatList,
-  TouchableOpacity,
-} from 'react-native';
-import {CategoryListItem, FoodCard, Separator} from '../components';
-import {ApiContants, Colors, Fonts, Images} from '../contants';
-import {RestaurantService, StaticImageService} from '../services';
-import {Display} from '../utils';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import {useDispatch, useSelector} from 'react-redux';
-import {BookmarkAction} from '../actions';
+} from "react-native";
+import { CategoryListItem, FoodCard, Separator } from "../components";
+import { ApiContants, Colors, Fonts, Images } from "../constants";
+import { RestaurantService, StaticImageService } from "../services";
+import { Display } from "../utils";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
+import { useDispatch, useSelector } from "react-redux";
+import { BookmarkAction } from "../actions";
 
 const ListHeader = () => (
   <View
     style={{
-      flexDirection: 'row',
+      flexDirection: "row",
       flex: 1,
       width: 40,
-      justifyContent: 'flex-end',
-    }}>
+      justifyContent: "flex-end",
+    }}
+  >
     <View
       style={{
         backgroundColor: Colors.LIGHT_YELLOW,
@@ -40,10 +40,11 @@ const ListHeader = () => (
 const ListFooter = () => (
   <View
     style={{
-      flexDirection: 'row',
+      flexDirection: "row",
       flex: 1,
       width: 40,
-    }}>
+    }}
+  >
     <View
       style={{
         backgroundColor: Colors.LIGHT_YELLOW,
@@ -58,7 +59,7 @@ const ListFooter = () => (
 const RestaurantScreen = ({
   navigation,
   route: {
-    params: {restaurantId},
+    params: { restaurantId },
   },
 }) => {
   const [restaurant, setRestaurant] = useState(null);
@@ -66,7 +67,7 @@ const RestaurantScreen = ({
   //const [isBookmarked, setIsBookmarked] = useState(false);
 
   useEffect(() => {
-    RestaurantService.getOneRestaurantById(restaurantId).then(response => {
+    RestaurantService.getOneRestaurantById(restaurantId).then((response) => {
       setSelectedCategory(response?.data?.categories[0]);
       setRestaurant(response?.data);
     });
@@ -74,15 +75,15 @@ const RestaurantScreen = ({
 
   const dispatch = useDispatch();
   const isBookmarked = useSelector(
-    state =>
+    (state) =>
       state?.bookmarkState?.bookmarks?.filter(
-        item => item?.restaurantId === restaurantId,
-      )?.length > 0,
+        (item) => item?.restaurantId === restaurantId
+      )?.length > 0
   );
   const addBookmark = () =>
-    dispatch(BookmarkAction.addBookmark({restaurantId}));
+    dispatch(BookmarkAction.addBookmark({ restaurantId }));
   const removeBookmark = () =>
-    dispatch(BookmarkAction.removeBookmark({restaurantId}));
+    dispatch(BookmarkAction.removeBookmark({ restaurantId }));
 
   return (
     <View style={styles.container}>
@@ -92,7 +93,7 @@ const RestaurantScreen = ({
           source={{
             uri: StaticImageService.getGalleryImage(
               restaurant?.images?.cover,
-              ApiContants.STATIC_IMAGE.SIZE.SQUARE,
+              ApiContants.STATIC_IMAGE.SIZE.SQUARE
             ),
           }}
           style={styles.backgroundImage}
@@ -103,7 +104,7 @@ const RestaurantScreen = ({
             <View style={styles.titleContainer}>
               <Text style={styles.title}>{restaurant?.name}</Text>
               <Ionicons
-                name={isBookmarked ? 'bookmark' : 'bookmark-outline'}
+                name={isBookmarked ? "bookmark" : "bookmark-outline"}
                 color={Colors.DEFAULT_YELLOW}
                 size={24}
                 onPress={() =>
@@ -111,7 +112,7 @@ const RestaurantScreen = ({
                 }
               />
             </View>
-            <Text style={styles.tagText}>{restaurant?.tags?.join(' • ')}</Text>
+            <Text style={styles.tagText}>{restaurant?.tags?.join(" • ")}</Text>
             <View style={styles.ratingReviewsContainer}>
               <FontAwesome
                 name="star"
@@ -156,29 +157,29 @@ const RestaurantScreen = ({
             <View style={styles.categoriesContainer}>
               <FlatList
                 data={restaurant?.categories}
-                keyExtractor={item => item}
+                keyExtractor={(item) => item}
                 horizontal
                 ListHeaderComponent={() => <ListHeader />}
                 ListFooterComponent={() => <ListFooter />}
                 showsHorizontalScrollIndicator={false}
-                renderItem={({item}) => (
+                renderItem={({ item }) => (
                   <CategoryListItem
                     name={item}
                     isActive={item === selectedCategory}
-                    selectCategory={category => setSelectedCategory(category)}
+                    selectCategory={(category) => setSelectedCategory(category)}
                   />
                 )}
               />
             </View>
             <View style={styles.foodList}>
               {restaurant?.foods
-                ?.filter(food => food?.category === selectedCategory)
-                ?.map(item => (
+                ?.filter((food) => food?.category === selectedCategory)
+                ?.map((item) => (
                   <FoodCard
                     key={item?.id}
                     {...item}
                     navigate={() =>
-                      navigation.navigate('Food', {foodId: item?.id})
+                      navigation.navigate("Food", { foodId: item?.id })
                     }
                   />
                 ))}
@@ -194,10 +195,10 @@ const RestaurantScreen = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   backgroundImage: {
-    position: 'absolute',
+    position: "absolute",
     top: 0,
     height: Display.setWidth(100),
     width: Display.setWidth(100),
@@ -208,9 +209,9 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 32,
   },
   titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     marginHorizontal: 25,
     marginTop: 15,
   },
@@ -229,8 +230,8 @@ const styles = StyleSheet.create({
     color: Colors.DEFAULT_GREY,
   },
   ratingReviewsContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginHorizontal: 25,
     marginTop: 10,
   },
@@ -249,11 +250,11 @@ const styles = StyleSheet.create({
     color: Colors.DEFAULT_BLACK,
   },
   deliveryDetailsContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginHorizontal: 25,
     marginTop: 10,
-    justifyContent: 'space-between',
+    justifyContent: "space-between",
   },
   deliveryDetailText: {
     marginLeft: 3,
@@ -267,13 +268,13 @@ const styles = StyleSheet.create({
     width: 16,
   },
   rowAndCenter: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
   restaurantType: {
     backgroundColor: Colors.LIGHT_YELLOW,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     paddingHorizontal: 10,
     paddingVertical: 3,
     borderRadius: 8,

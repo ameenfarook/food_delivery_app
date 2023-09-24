@@ -1,7 +1,7 @@
-import {ApiContants} from '../contants';
-import axios from 'axios';
-import {authHeader} from '../utils/Generator';
-import {getToken} from '../Store';
+import { ApiContants } from "../constants";
+import axios from "axios";
+import { authHeader } from "../utils/Generator";
+import { getToken } from "../Store";
 
 const getCartItems = async () => {
   console.log(`CartService | getCartItems`);
@@ -10,7 +10,7 @@ const getCartItems = async () => {
       `${ApiContants.BACKEND_API.BASE_API_URL}${ApiContants.BACKEND_API.CART}`,
       {
         headers: authHeader(getToken()),
-      },
+      }
     );
     if (response?.status === 200) {
       return {
@@ -32,7 +32,7 @@ const getCartItems = async () => {
   }
 };
 
-const addToCart = async ({foodId}) => {
+const addToCart = async ({ foodId }) => {
   console.log(`CartService | addToCart`);
   try {
     let response = await axios.post(
@@ -40,7 +40,7 @@ const addToCart = async ({foodId}) => {
       {},
       {
         headers: authHeader(getToken()),
-      },
+      }
     );
     if (response?.status === 200) {
       return {
@@ -63,14 +63,14 @@ const addToCart = async ({foodId}) => {
   }
 };
 
-const removeFromCart = async ({foodId}) => {
+const removeFromCart = async ({ foodId }) => {
   console.log(`CartService | removeFromCart`);
   try {
     let response = await axios.delete(
       `${ApiContants.BACKEND_API.BASE_API_URL}${ApiContants.BACKEND_API.CART}/${foodId}`,
       {
         headers: authHeader(getToken()),
-      },
+      }
     );
     if (response?.status === 200) {
       return {
@@ -92,4 +92,4 @@ const removeFromCart = async ({foodId}) => {
   }
 };
 
-export default {getCartItems, addToCart, removeFromCart};
+export default { getCartItems, addToCart, removeFromCart };

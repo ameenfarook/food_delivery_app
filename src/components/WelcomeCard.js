@@ -1,9 +1,9 @@
-import React from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
-import {Display} from '../utils';
-import {Fonts, Colors, Images} from '../contants';
+import React from "react";
+import { View, Text, StyleSheet, Image } from "react-native";
+import { Display } from "../utils";
+import { Fonts, Colors, Images } from "../constants";
 
-const WelcomeCard = ({title, content, image}) => {
+const WelcomeCard = ({ title, content, image }) => {
   return (
     <View style={styles.container}>
       <Image style={styles.image} source={Images[image]} resizeMode="contain" />
@@ -16,8 +16,8 @@ const WelcomeCard = ({title, content, image}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     width: Display.setWidth(100),
   },
   image: {
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
   contentText: {
     fontSize: 18,
     fontFamily: Fonts.POPPINS_LIGHT,
-    textAlign: 'center',
+    textAlign: "center",
     marginHorizontal: 20,
   },
 });

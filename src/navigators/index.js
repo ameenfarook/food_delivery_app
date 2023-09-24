@@ -1,6 +1,6 @@
-import React, {useEffect} from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
+import React, { useEffect } from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
 import {
   SplashScreen,
   WelcomeScreen,
@@ -12,16 +12,16 @@ import {
   HomeScreen,
   RestaurantScreen,
   FoodScreen,
-} from '../screens';
-import HomeTabs from './BottomTabs';
-import {useSelector, useDispatch} from 'react-redux';
-import {GeneralAction} from '../actions';
+} from "../screens";
+import HomeTabs from "./BottomTabs";
+import { useSelector, useDispatch } from "react-redux";
+import { GeneralAction } from "../actions";
 
 const Stack = createStackNavigator();
 
 const Navigators = () => {
-  const {isAppLoading, token, isFirstTimeUse} = useSelector(
-    state => state?.generalState,
+  const { isAppLoading, token, isFirstTimeUse } = useSelector(
+    (state) => state?.generalState
   );
   const dispatch = useDispatch();
 
@@ -31,10 +31,10 @@ const Navigators = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{headerShown: false}}>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
         {isAppLoading ? (
           <Stack.Screen name="Splash" component={SplashScreen} />
-        ) : !token || token === null || token === '' ? (
+        ) : !token || token === null || token === "" ? (
           <>
             {isFirstTimeUse && (
               <Stack.Screen name="Welcome" component={WelcomeScreen} />

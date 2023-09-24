@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -7,23 +7,26 @@ import {
   TextInput,
   TouchableOpacity,
   Image,
-} from 'react-native';
-import {Separator, ToggleButton} from '../components';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import Feather from 'react-native-vector-icons/Feather';
-import {Colors, Fonts, Images} from '../contants';
-import {Display} from '../utils';
-import {AuthenicationService, StorageService} from '../services';
-import LottieView from 'lottie-react-native';
-import {useDispatch, useSelector} from 'react-redux';
-import {GeneralAction} from '../actions';
+} from "react-native";
+import { Separator, ToggleButton } from "../components";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import Feather from "react-native-vector-icons/Feather";
+import { Colors, Fonts, Images } from "../constants";
+import { Display } from "../utils";
+import { AuthenicationService, StorageService } from "../services";
+import LottieView from "lottie-react-native";
+import { useDispatch } from "react-redux";
+import { GeneralAction } from "../actions";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-const SigninScreen = ({navigation}) => {
+const SigninScreen = ({ navigation }) => {
   const [isPasswordShow, setIsPasswordShow] = useState(false);
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const insets = useSafeAreaInsets();
 
   const dispatch = useDispatch();
 
@@ -33,7 +36,7 @@ const SigninScreen = ({navigation}) => {
       username,
       password,
     };
-    AuthenicationService.login(user).then(response => {
+    AuthenicationService.login(user).then((response) => {
       setIsLoading(false);
       if (response?.status) {
         StorageService.setToken(response?.data).then(() => {
@@ -52,7 +55,7 @@ const SigninScreen = ({navigation}) => {
         backgroundColor={Colors.DEFAULT_WHITE}
         translucent
       />
-      <Separator height={StatusBar.currentHeight} />
+      <Separator height={insets.top} />
       <View style={styles.headerContainer}>
         <Ionicons
           name="chevron-back-outline"
@@ -71,14 +74,14 @@ const SigninScreen = ({navigation}) => {
             name="user"
             size={22}
             color={Colors.DEFAULT_GREY}
-            style={{marginRight: 10}}
+            style={{ marginRight: 10 }}
           />
           <TextInput
             placeholder="Username"
             placeholderTextColor={Colors.DEFAULT_GREY}
             selectionColor={Colors.DEFAULT_GREY}
             style={styles.inputText}
-            onChangeText={text => setUsername(text)}
+            onChangeText={(text) => setUsername(text)}
           />
         </View>
       </View>
@@ -89,7 +92,7 @@ const SigninScreen = ({navigation}) => {
             name="lock"
             size={22}
             color={Colors.DEFAULT_GREY}
-            style={{marginRight: 10}}
+            style={{ marginRight: 10 }}
           />
           <TextInput
             secureTextEntry={isPasswordShow ? false : true}
@@ -97,13 +100,13 @@ const SigninScreen = ({navigation}) => {
             placeholderTextColor={Colors.DEFAULT_GREY}
             selectionColor={Colors.DEFAULT_GREY}
             style={styles.inputText}
-            onChangeText={text => setPassword(text)}
+            onChangeText={(text) => setPassword(text)}
           />
           <Feather
-            name={isPasswordShow ? 'eye' : 'eye-off'}
+            name={isPasswordShow ? "eye" : "eye-off"}
             size={22}
             color={Colors.DEFAULT_GREY}
-            style={{marginRight: 10}}
+            style={{ marginRight: 10 }}
             onPress={() => setIsPasswordShow(!isPasswordShow)}
           />
         </View>
@@ -116,14 +119,16 @@ const SigninScreen = ({navigation}) => {
         </View>
         <Text
           style={styles.forgotPasswordText}
-          onPress={() => navigation.navigate('ForgotPassword')}>
+          onPress={() => navigation.navigate("ForgotPassword")}
+        >
           Forgot Password
         </Text>
       </View>
       <TouchableOpacity
         style={styles.signinButton}
         onPress={() => signIn()}
-        activeOpacity={0.8}>
+        activeOpacity={0.8}
+      >
         {isLoading ? (
           <LottieView source={Images.LOADING} autoPlay />
         ) : (
@@ -134,7 +139,8 @@ const SigninScreen = ({navigation}) => {
         <Text style={styles.accountText}>Don't have an account?</Text>
         <Text
           style={styles.signupText}
-          onPress={() => navigation.navigate('Signup')}>
+          onPress={() => navigation.navigate("Signup")}
+        >
           Sign Up
         </Text>
       </View>
@@ -167,8 +173,8 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.DEFAULT_WHITE,
   },
   headerContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     paddingVertical: 10,
     paddingHorizontal: 20,
   },
@@ -177,7 +183,7 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.POPPINS_MEDIUM,
     lineHeight: 20 * 1.4,
     width: Display.setWidth(80),
-    textAlign: 'center',
+    textAlign: "center",
   },
   title: {
     fontSize: 20,
@@ -201,15 +207,15 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderWidth: 0.5,
     borderColor: Colors.LIGHT_GREY2,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   inputSubContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
   inputText: {
     fontSize: 18,
-    textAlignVertical: 'center',
+    textAlignVertical: "center",
     padding: 0,
     height: Display.setHeight(6),
     color: Colors.DEFAULT_BLACK,
@@ -217,9 +223,9 @@ const styles = StyleSheet.create({
   },
   forgotPasswordContainer: {
     marginHorizontal: 20,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
   rememberMeText: {
     marginLeft: 10,
@@ -239,8 +245,8 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginHorizontal: 20,
     height: Display.setHeight(6),
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     marginTop: 20,
   },
   signinButtonText: {
@@ -251,10 +257,10 @@ const styles = StyleSheet.create({
   },
   signupContainer: {
     marginHorizontal: 20,
-    justifyContent: 'center',
+    justifyContent: "center",
     paddingVertical: 20,
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
   accountText: {
     fontSize: 13,
@@ -275,7 +281,7 @@ const styles = StyleSheet.create({
     color: Colors.DEFAULT_BLACK,
     fontFamily: Fonts.POPPINS_MEDIUM,
     marginLeft: 5,
-    alignSelf: 'center',
+    alignSelf: "center",
   },
   facebookButton: {
     backgroundColor: Colors.FABEBOOK_BLUE,
@@ -283,16 +289,16 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     borderRadius: 8,
     marginVertical: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   googleButton: {
     backgroundColor: Colors.GOOGLE_BLUE,
     paddingVertical: 15,
     marginHorizontal: 20,
     borderRadius: 8,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   signinButtonLogo: {
     height: 18,
@@ -302,14 +308,14 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.DEFAULT_WHITE,
     padding: 2,
     borderRadius: 3,
-    position: 'absolute',
+    position: "absolute",
     left: 25,
   },
   socialButtonsContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100%",
   },
   socialSigninButtonText: {
     color: Colors.DEFAULT_WHITE,
@@ -318,8 +324,8 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.POPPINS_MEDIUM,
   },
   toggleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
   errorMessage: {
     fontSize: 10,

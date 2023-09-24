@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -7,47 +7,48 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
-} from 'react-native';
-import {ApiContants, Colors, Fonts, Images} from '../contants';
-import {FoodService, StaticImageService} from '../services';
-import {Display} from '../utils';
-import {Separator} from '../components';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import {useDispatch, useSelector} from 'react-redux';
-import {CartAction} from '../actions';
+} from "react-native";
+import { ApiContants, Colors, Fonts, Images } from "../constants";
+import { FoodService, StaticImageService } from "../services";
+import { Display } from "../utils";
+import { Separator } from "../components";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
+import AntDesign from "react-native-vector-icons/AntDesign";
+import { useDispatch, useSelector } from "react-redux";
+import { CartAction } from "../actions";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-const setStyle = isActive =>
+const setStyle = (isActive) =>
   isActive
     ? styles.subMenuButtonText
-    : {...styles.subMenuButtonText, color: Colors.DEFAULT_GREY};
+    : { ...styles.subMenuButtonText, color: Colors.DEFAULT_GREY };
 
 const FoodScreen = ({
   navigation,
   route: {
-    params: {foodId},
+    params: { foodId },
   },
 }) => {
   const [food, setFood] = useState(null);
-  const [selectedSubMenu, setSelectedSubMenu] = useState('Details');
+  const [selectedSubMenu, setSelectedSubMenu] = useState("Details");
 
   const dispatch = useDispatch();
   const itemCount = useSelector(
-    state =>
-      state?.cartState?.cart?.cartItems?.find(item => item?.foodId === foodId)
-        ?.count,
+    (state) =>
+      state?.cartState?.cart?.cartItems?.find((item) => item?.foodId === foodId)
+        ?.count
   );
 
   useEffect(() => {
-    FoodService.getOneFoodById(foodId).then(response => {
-      console.log(response?.data);
+    FoodService.getOneFoodById(foodId).then((response) => {
       setFood(response?.data);
     });
   }, []);
 
-  const addToCart = foodId => dispatch(CartAction.addToCart({foodId}));
-  const removeFromCart = foodId =>
-    dispatch(CartAction.removeFromCart({foodId}));
+  const addToCart = () => dispatch(CartAction.addToCart({ foodId }));
+  const removeFromCart = () => dispatch(CartAction.removeFromCart({ foodId }));
+
+  const insets = useSafeAreaInsets();
 
   return (
     <View style={styles.container}>
@@ -61,7 +62,7 @@ const FoodScreen = ({
         source={{
           uri: StaticImageService.getGalleryImage(
             food?.image,
-            ApiContants.STATIC_IMAGE.SIZE.SQUARE,
+            ApiContants.STATIC_IMAGE.SIZE.SQUARE
           ),
         }}
       />
@@ -94,16 +95,18 @@ const FoodScreen = ({
           <View style={styles.subMenuContainer}>
             <TouchableOpacity
               style={styles.subMenuButtonContainer}
-              onPress={() => setSelectedSubMenu('Details')}>
-              <Text style={setStyle(selectedSubMenu === 'Details')}>
+              onPress={() => setSelectedSubMenu("Details")}
+            >
+              <Text style={setStyle(selectedSubMenu === "Details")}>
                 Details
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.subMenuButtonContainer}
-              onPress={() => setSelectedSubMenu('Reviews')}
-              s>
-              <Text style={setStyle(selectedSubMenu === 'Reviews')}>
+              onPress={() => setSelectedSubMenu("Reviews")}
+              s
+            >
+              <Text style={setStyle(selectedSubMenu === "Reviews")}>
                 Reviews
               </Text>
             </TouchableOpacity>
@@ -125,27 +128,33 @@ const FoodScreen = ({
         </View>
       </ScrollView>
       <View style={styles.buttonsContainer}>
-        <View style={styles.itemAddContainer}>
-          <AntDesign
-            name="minus"
-            color={Colors.DEFAULT_YELLOW}
-            size={18}
-            onPress={() => removeFromCart(foodId)}
-          />
-          <Text style={styles.itemCountText}>{itemCount ? itemCount : 0}</Text>
-          <AntDesign
-            name="plus"
-            color={Colors.DEFAULT_YELLOW}
-            size={18}
-            onPress={() => addToCart(foodId)}
-          />
+        <View style={styles.buttonsSubContainer}>
+          <View style={styles.itemAddContainer}>
+            <AntDesign
+              name="minus"
+              color={Colors.DEFAULT_YELLOW}
+              size={20}
+              onPress={() => removeFromCart()}
+            />
+            <Text style={styles.itemCountText}>
+              {itemCount ? itemCount : 0}
+            </Text>
+            <AntDesign
+              name="plus"
+              color={Colors.DEFAULT_YELLOW}
+              size={20}
+              onPress={() => addToCart()}
+            />
+          </View>
+          <TouchableOpacity
+            style={styles.cartButton}
+            onPress={() => navigation.navigate("Cart")}
+            activeOpacity={0.8}
+          >
+            <Text style={styles.cartButtonText}>Go to Cart</Text>
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity
-          style={styles.cartButton}
-          onPress={() => navigation.navigate('Cart')}
-          activeOpacity={0.8}>
-          <Text style={styles.cartButtonText}>Go to Cart</Text>
-        </TouchableOpacity>
+        <Separator height={insets.bottom / 2} />
       </View>
     </View>
   );
@@ -157,7 +166,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.DEFAULT_WHITE,
   },
   image: {
-    position: 'absolute',
+    position: "absolute",
     height: Display.setWidth(100),
     width: Display.setWidth(100),
     top: 0,
@@ -168,9 +177,9 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 32,
   },
   titleHeaderContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     marginHorizontal: 20,
     marginTop: 10,
   },
@@ -187,15 +196,15 @@ const styles = StyleSheet.create({
     color: Colors.DEFAULT_YELLOW,
   },
   subHeaderContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     marginHorizontal: 20,
     marginTop: 15,
   },
   rowAndCenter: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
   ratingText: {
     fontSize: 13,
@@ -223,19 +232,19 @@ const styles = StyleSheet.create({
     marginLeft: 3,
   },
   subMenuContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     borderTopWidth: 0.5,
     borderBottomWidth: 0.5,
     paddingHorizontal: 20,
     marginTop: 20,
     borderColor: Colors.DEFAULT_GREY,
-    justifyContent: 'space-evenly',
+    justifyContent: "space-evenly",
   },
   subMenuButtonContainer: {
     paddingVertical: 15,
     width: Display.setWidth(30),
-    alignItems: 'center',
+    alignItems: "center",
   },
   subMenuButtonText: {
     fontSize: 13,
@@ -259,31 +268,33 @@ const styles = StyleSheet.create({
     lineHeight: 12 * 1.4,
     fontFamily: Fonts.POPPINS_SEMI_BOLD,
     color: Colors.INACTIVE_GREY,
-    textAlign: 'justify',
+    textAlign: "justify",
   },
   buttonsContainer: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 0,
-    flexDirection: 'row',
     paddingHorizontal: Display.setWidth(5),
-    justifyContent: 'space-between',
     backgroundColor: Colors.DEFAULT_WHITE,
     width: Display.setWidth(100),
     paddingVertical: Display.setWidth(2.5),
   },
+  buttonsSubContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
   itemAddContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     backgroundColor: Colors.LIGHT_GREY2,
     height: Display.setHeight(6),
     width: Display.setWidth(30),
-    justifyContent: 'center',
+    justifyContent: "space-evenly",
     borderRadius: 8,
   },
   itemCountText: {
     color: Colors.DEFAULT_BLACK,
-    fontSize: 14,
-    lineHeight: 14 * 1.4,
+    fontSize: 18,
+    lineHeight: 18 * 1.4,
     fontFamily: Fonts.POPPINS_SEMI_BOLD,
     marginHorizontal: 8,
   },
@@ -291,8 +302,8 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.DEFAULT_GREEN,
     height: Display.setHeight(6),
     width: Display.setWidth(58),
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     borderRadius: 8,
   },
   cartButtonText: {

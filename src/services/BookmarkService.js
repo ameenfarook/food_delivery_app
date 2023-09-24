@@ -1,7 +1,7 @@
-import {ApiContants} from '../contants';
-import axios from 'axios';
-import {authHeader} from '../utils/Generator';
-import {getToken} from '../Store';
+import { ApiContants } from "../constants";
+import axios from "axios";
+import { authHeader } from "../utils/Generator";
+import { getToken } from "../Store";
 
 const getBookmarks = async () => {
   console.log(`BookmarkService | getBookmarks`);
@@ -10,7 +10,7 @@ const getBookmarks = async () => {
       `${ApiContants.BACKEND_API.BASE_API_URL}${ApiContants.BACKEND_API.BOOKMARK}`,
       {
         headers: authHeader(getToken()),
-      },
+      }
     );
     if (response?.status === 200) {
       return {
@@ -32,7 +32,7 @@ const getBookmarks = async () => {
   }
 };
 
-const addBookmark = async ({restaurantId}) => {
+const addBookmark = async ({ restaurantId }) => {
   console.log(`BookmarkService | addBookmark`);
   try {
     let response = await axios.post(
@@ -40,7 +40,7 @@ const addBookmark = async ({restaurantId}) => {
       {},
       {
         headers: authHeader(getToken()),
-      },
+      }
     );
     if (response?.status === 200) {
       return {
@@ -63,14 +63,14 @@ const addBookmark = async ({restaurantId}) => {
   }
 };
 
-const removeBookmark = async ({restaurantId}) => {
+const removeBookmark = async ({ restaurantId }) => {
   console.log(`BookmarkService | removeBookmark`);
   try {
     let response = await axios.delete(
       `${ApiContants.BACKEND_API.BASE_API_URL}${ApiContants.BACKEND_API.BOOKMARK}/${restaurantId}`,
       {
         headers: authHeader(getToken()),
-      },
+      }
     );
     if (response?.status === 200) {
       return {
@@ -92,4 +92,4 @@ const removeBookmark = async ({restaurantId}) => {
   }
 };
 
-export default {getBookmarks, addBookmark, removeBookmark};
+export default { getBookmarks, addBookmark, removeBookmark };
